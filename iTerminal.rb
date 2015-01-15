@@ -1,59 +1,31 @@
-
-
-# class Iterminal
-# 	def initialize
-# 		@input = File.new("presentation.txt")
-# 	end
-
-
-# 	def printPresentation
-# 		@input.each("presentation.txt") do |line|
-#   			puts line
-# 		end
-# 	end
-
-# end
-
-# elements.each_with_index {|element, index|
-#    next_element = elements[index+1]
-#    do_something if next_element.nil?
-#    ...
-
-# a = []
-# File.open('tmp.txt') do |f|
-#   f.lines.each do |line|
-#     a << line.split.map(&:to_i)
-#   end
-# end
-
+require "pp"
 
 class SlideShow 
 	def initialize
-		slidePresentation = IO.read("presentation.txt") do |i|
-			i.lines.each do |line|
-				slidePresentation << line.split{"\n"}
-			end
-		end
+		slidePresentation = IO.read("presentation.txt")
+		@newSlides = slidePresentation.split("----")
+		@current = 0
 	end
-
 
 		
 
-	def auto
-		slidePresentation.each do |line|
-  			puts line
-		end
-	end
+	 def auto()
+	 	@newSlides.each do |line|
+ 			puts line
+	 	end
+	 end
+	 def start()
+	 	puts @newSlides[0]
+	 end
 	
 
-	# def nextSlide
-	# 	@input.each_with_index {|0 | index|}
-	# 		next_element = @input[index+1]
-	# 		puts next_element
-	# end
-
+	def nextSlide()
+		@current += 1
+		puts @newSlides[@current]
+	end
 	def prevSlide
-		@previous = previousSlide
+		@current -= 1
+		puts @newSlides[@current]
 
 
 	end
@@ -68,5 +40,9 @@ end
 
 
 term = SlideShow.new
- # term.auto
+term.start
+term.nextSlide
+term.nextSlide
+term.nextSlide
+term.prevSlide
 
