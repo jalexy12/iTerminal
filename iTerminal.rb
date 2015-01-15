@@ -4,7 +4,7 @@ class SlideShow
 	def initialize
 		slidePresentation = IO.read("presentation.txt")
 		@newSlides = slidePresentation.split("----")
-		@current = 0
+		
 	end
 
 		
@@ -14,19 +14,30 @@ class SlideShow
  			puts line
 	 	end
 	 end
+	
 	 def start()
+	 	@current = 0
 	 	puts @newSlides[0]
 	 end
 	
 
 	def nextSlide()
-		@current += 1
-		puts @newSlides[@current]
+		if @current == (@newSlides.length - 1)
+			start
+		else
+			@current += 1
+			puts @newSlides[@current]
+		end
 	end
+	
 	def prevSlide
-		@current -= 1
-		puts @newSlides[@current]
-
+		if @current == 0
+			puts "No more previous slides"
+	
+		else
+			@current -= 1
+			puts @newSlides[@current]
+		end
 
 	end
 
@@ -41,8 +52,5 @@ end
 
 term = SlideShow.new
 term.start
-term.nextSlide
-term.nextSlide
-term.nextSlide
 term.prevSlide
 
