@@ -3,7 +3,7 @@ require "pp"
 class SlideShow 
 	def initialize
 		slidePresentation = IO.read("presentation.txt")
-		@newSlides = slidePresentation.split("----")
+		@newSlides = slidePresentation.split("----").map {|slide| slide.strip} 
 		puts "nxt for nxt : prev for previous : auto for auto : exit to exit"
 	end
 
@@ -44,65 +44,69 @@ class SlideShow
 	end
 
 	def print_current
-		puts @newSlides[@current]
+		
 	end	
 
 end
 
 class FormattedSlideshow < SlideShow 
 	def print_current
-		puts format(@newSlides[@current])
+		puts format(@newSlides[@current])  
 	end	
 
+	
+
+	def horizontal_center(slide)
+		stringLength = slide.length					#Receive string length from array
+		prompt_space_hor = 80 - stringLength 				#Subtract from console size
+		center_hor = prompt_space_hor / 2 				#Divide remaining prompt space by 2
+		center_line = ("^") * center_hor.abs	
+		
+
+		return "#{center_line} #{slide} "
+	end
+
+	def vertical_center(slide)
+		prompt_space_vert = 25 - height
+		center_vert = prompt_space_vert / 2
+		center_vert_line = ("\n") * center_vert.abs
+		return "#{center_vert_line}#{slide}"
+	end
+	
+
 	def format(slide)
-		hor_formatted_slide = @newSlides.horizontal_center
-		# @newSlide[current]
-		puts hor_formatted_slide
+		horizontal_center(slide)
+		vertical_center(slide)
 		
-	end
-
-	def horizontal_center
-		stringLength = @newSlides[@current].length
-		prompt_space = 80 - stringLength 
-		center_hor = prompt_space / 2
-		center_line = center_hor * "  "
-		return "#{center_line} + #{@newSlides[@current]}"
-	end
-
-	def vertical_center
 		
-
-
+		return slide 
 	end
+
+	# def format_vertical(slide)
+	# 	return vertical_center(slide)
+	# end
+
+
+
 end
-
-
-
-
-
-
-
-
-
-
 
 
 term = FormattedSlideshow.new
 term.start
 term.print_current
 
-# input = nil
+input = nil
 
-#  while input != "Exit"
-# 	input = gets.chomp
-# 	if input == "nxt"
-# 		term.nextSlide
-# 	elsif input == "prev"
-# 		term.prevSlide
-# 	else input == "auto"
-# 		term.auto
-# 	end
-# end
+ while input != "Exit"
+	input = gets.chomp
+	if input == "nxt"
+		term.nextSlide
+	elsif input == "prev"
+		term.prevSlide
+	else input == "auto"
+		term.auto
+	end
+end
 
 
 
