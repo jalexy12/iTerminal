@@ -43,9 +43,7 @@ class SlideShow
 
 	end
 
-	def print_current
-		
-	end	
+	
 
 end
 
@@ -57,34 +55,54 @@ class FormattedSlideshow < SlideShow
 	
 
 	def horizontal_center(slide)
-		stringLength = slide.length					#Receive string length from array
+		stringLength = slide.length			#Receive string length from array
 		prompt_space_hor = 80 - stringLength 				#Subtract from console size
-		center_hor = prompt_space_hor / 2 				#Divide remaining prompt space by 2
-		center_line = ("^") * center_hor.abs	
+		center_hor = prompt_space_hor / 2 
+		puts center_hor				#Divide remaining prompt space by 2
+		center_line = (" ") * center_hor	
+		return "#{center_line}#{slide}"
 		
-
-		return "#{center_line} #{slide} "
 	end
 
+	def split_slide(slide)
+
+		slide_lines = slide.split("\n")
+		formatted_lines = slide_lines.map {|x| self.horizontal_center(x)}
+		formatted_lines.join("\n")
+		
+
+		# slide_presentation.each do |i|
+		# 	longest_line = i.length
+		# end
+	end
+	# def center_presentation
+	
+
+	# end
+
+
+
+
 	def vertical_center(slide)
+		newSlide = slide.split("\n")
+		height = newSlide.length
 		prompt_space_vert = 25 - height
 		center_vert = prompt_space_vert / 2
-		center_vert_line = ("\n") * center_vert.abs
-		return "#{center_vert_line}#{slide}"
+		center_vert_line = ("\n") * center_vert
+		#horizontal_center(slide)
+		return center_vert_line + slide + center_vert_line 
 	end
 	
 
 	def format(slide)
-		horizontal_center(slide)
-		vertical_center(slide)
+		new_slide = self.split_slide(slide)
+
+		formattedSlide = self.vertical_center(new_slide)
 		
+		return formattedSlide
 		
-		return slide 
 	end
 
-	# def format_vertical(slide)
-	# 	return vertical_center(slide)
-	# end
 
 
 
@@ -93,7 +111,8 @@ end
 
 term = FormattedSlideshow.new
 term.start
-term.print_current
+
+
 
 input = nil
 
